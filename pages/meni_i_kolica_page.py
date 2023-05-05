@@ -69,18 +69,18 @@ class MeniPage(BasePage):
         """
         a = self.getElementList(self._food_buttons)
         b = self.getElementList(self._food_prices)
-        r = bool(a) and bool(b)
+        r = bool(a) & bool(b)
         for i in range(len(a)):
             price = self.getText(element = b[i], info = self.food_names[i])[1:]
             self.all_food[self.food_names[i]] = MenuItem(price, a[i])
-            r = r and bool(price)
+            r = r & bool(price)
         c = self.getElementList(self._desert_buttons)
         d = self.getElementList(self._desert_prices)
-        r = r and bool(c) and bool(d)
+        r = r & bool(c) & bool(d)
         for i in range(len(c)):
             price = self.getText(element = d[i], info = self.desert_names[i])[1:]
             self.all_food[self.desert_names[i]] = MenuItem(price, c[i])
-            r = r and bool(price)
+            r = r & bool(price)
         return r
 
     def addFToBasket(self, b):
@@ -113,16 +113,16 @@ class MeniPage(BasePage):
                 a = random.randint(0, 4)
                 current = self.desert_names[a]
             time.sleep(t)
-            r = r and bool(self.addFToBasket(current))
+            r = r & bool(self.addFToBasket(current))
             added.append(current)
-            if i == n-3 and fc == 0:                            # when 2 items are yet to be added, ads food if none
+            if i == n-3 & fc == 0:                            # when 2 items are yet to be added, ads food if none
                 x = self.food_names[random.randint(0, 7)]       # and increases iterator by one
-                r = r and bool(self.addFToBasket(x))
+                r = r & bool(self.addFToBasket(x))
                 added.append(x)
                 i += 1
-            if i == n-2 and (len(added) == len(set(added))):    # 1 item before end, adds last one if there are no
+            if i == n-2 & (len(added) == len(set(added))):    # 1 item before end, adds last one if there are no
                 time.sleep(t)                                   # duplicates, and breaks the loop. Checks this by
-                r = r and bool(self.addFToBasket(current))      # comparing length of set and list of added items
+                r = r & bool(self.addFToBasket(current))      # comparing length of set and list of added items
                 added.append(current)
                 break
         return r

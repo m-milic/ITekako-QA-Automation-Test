@@ -38,7 +38,7 @@ class PreporukaPage(BasePage):
         """
         r = True
         for i in range(l):
-            r = r and bool(self.elementClick(self.pozitivni[i], locatorType="ID"))
+            r = r & bool(self.elementClick(self.pozitivni[i], locatorType="ID"))
         return r
 
     def clickNegativni(self, l = 0):
@@ -47,7 +47,7 @@ class PreporukaPage(BasePage):
         """
         r = True
         for i in range(l, 9):
-            r = r and bool(self.elementClick(self.negativni[i], locatorType="ID"))
+            r = r & bool(self.elementClick(self.negativni[i], locatorType="ID"))
         return r
 
     def clcikAndVerifyAll(self, b="pozitivni"):
@@ -62,12 +62,12 @@ class PreporukaPage(BasePage):
             c = self.negativni
         for i in range(9):
             el = self.getElement(c[i], locatorType="ID")
-            r = r and bool(self.elementClick(element = el))
+            r = r & bool(self.elementClick(element = el))
             sel = self.getText(element = el, info = ("Odabrani odgovor na pitanje " + str(i+1)))
             res = self.getText(self.odabrani[i], locatorType="CLASS",
                                info = ("Prikazani odgovor na pitanje " + str(i+1)))
             valid = sel == res
-            r = r and bool(el) and bool(sel) and bool(res)
+            r = r & bool(el) & bool(sel) & bool(res)
             self.log.info("Clicked: " + sel)
             self.log.info("Displayed: " + res)
             self.log.info("Left button on question " + str(i+1) + " is correct?" + str(valid))
@@ -88,7 +88,7 @@ class PreporukaPage(BasePage):
         """
         r = True
         for i in range(len(self.odabrani)):
-            r = r and bool(self.clearInnerHtml(self.odabrani[i], locatorType="Class"))
+            r = r & bool(self.clearInnerHtml(self.odabrani[i], locatorType="Class"))
         return r
 
     def getFinal(self):
@@ -96,7 +96,7 @@ class PreporukaPage(BasePage):
         Fetches the title of the displayed final result, and returns it
         """
         a = self.getText(self._result, locatorType="ID", info = "Rezultat")
-        return a # and r
+        return a  # and r
 
     def verifyFinal(self, answer):
         """
@@ -115,13 +115,13 @@ class PreporukaPage(BasePage):
         """
         r = True
         for i in range(5):
-            r = r and bool(self.resetCook())
+            r = r & bool(self.resetCook())
             time.sleep(1)
-            r = r and bool(self.clearAll())
-            r = r and bool(self.clickPozitivni(i*2))
-            r = r and bool(self.clickNegativni(i*2))
-            r = r and bool(self.clickRMM())
-            r = r and bool(self.verifyFinal(self.odgovori[i]))
+            r = r & bool(self.clearAll())
+            r = r & bool(self.clickPozitivni(i*2))
+            r = r & bool(self.clickNegativni(i*2))
+            r = r & bool(self.clickRMM())
+            r = r & bool(self.verifyFinal(self.odgovori[i]))
             if r:
                 self.log.warning("Option " + self.odgovori[i] + " is displayed, as expected!")
             else:
