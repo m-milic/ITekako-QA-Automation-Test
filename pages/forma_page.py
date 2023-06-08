@@ -67,8 +67,8 @@ class FormaPage(BasePage):
         """
         a = self.getElement(self._celebrant)
         r = bool(a)
-        r = r and bool(self.sendKeys(name, element=a))
-        r = r and bool(self.sendEnter(element=a))
+        r = r & bool(self.sendKeys(name, element=a))
+        r = r & bool(self.sendEnter(element=a))
         self.ls_expected["Birthday_Person"] = name
         self.conf_expected["cbr"] = name
         return r
@@ -82,8 +82,8 @@ class FormaPage(BasePage):
         """
         a = self.getElement(self._age, locatorType= 'ID')
         r = bool(a)
-        r = r and bool(self.sendKeys(age, element=a))
-        r = r and bool(self.sendEnter(element=a))
+        r = r & bool(self.sendKeys(age, element=a))
+        r = r & bool(self.sendEnter(element=a))
         self.ls_expected["Age"] = age
         self.conf_expected["agr"] = age
         return r
@@ -104,8 +104,8 @@ class FormaPage(BasePage):
         dateSend = d.strftime("%m%d%Y")
         a = self.getElement(self._date, locatorType='ID')
         r = bool(a)
-        r = r and bool(self.elementClick(element=a))
-        r = r and bool(self.typeKeys(dateSend))
+        r = r & bool(self.elementClick(element=a))
+        r = r & bool(self.typeKeys(dateSend))
         self.ls_expected["Date"] = dateLS
         self.conf_expected["dtr"] = dateLS
         return r
@@ -128,9 +128,9 @@ class FormaPage(BasePage):
         timeSend2 = t.strftime("%p")
         a = self.getElement(self._time, locatorType= 'ID')
         r = bool(a)
-        r = r and bool(self.elementClick(element = a))
-        r = r and bool(self.typeKeys(timeSend1))
-        r = r and bool(self.typeKeys(timeSend2))
+        r = r & bool(self.elementClick(element = a))
+        r = r & bool(self.typeKeys(timeSend1))
+        r = r & bool(self.typeKeys(timeSend2))
         self.ls_expected["Time"] = timeLS
         self.conf_expected["tmr"] = timeLS
         return r
@@ -143,7 +143,7 @@ class FormaPage(BasePage):
         """
         o = option-1
         r = bool(self.elementClick(self._people, locatorType= 'ID'))
-        r = r and bool(self.elementClick(self._people_options[o]))
+        r = r & bool(self.elementClick(self._people_options[o]))
         value = self.no_of_ppl[o]
         self.ls_expected["Number_Of_People"] = value
         self.conf_expected["gur"] = value
@@ -179,7 +179,7 @@ class FormaPage(BasePage):
         altype = altype.lower()
         el = self.getElement(self.alergies_buttons[altype], locatorType="ID")
         r = bool(el)
-        r = r and bool(self.elementClick(element = el))
+        r = r & bool(self.elementClick(element = el))
         tx = self.alergies_ls[altype]
         if "alergies" not in self.ls_expected:
             self.ls_expected["alergies"] = tx
@@ -199,7 +199,7 @@ class FormaPage(BasePage):
                 n = random.randint(1, 6)
             a = random.sample(sorted(self.alergies_buttons), n)
             for i in a:
-                r = r and self.checkAlergy(i)
+                r = r & self.checkAlergy(i)
         else:
             self.log.warning("Cannot select any alergies, since No is checked in the alergies question!")
             r = False
@@ -215,13 +215,13 @@ class FormaPage(BasePage):
 
     def enterAllFields(self):
         r = self.selectIfAlergies()
-        r = r and self.enterOrganizer()
-        r = r and self.enterCelebrant()
-        r = r and self.enterAge()
-        r = r and self.enterDate()
-        r = r and self.enterTime()
-        r = r and self.selectPeople()
-        r = r and self.checkAlergies()
+        r = r & self.enterOrganizer()
+        r = r & self.enterCelebrant()
+        r = r & self.enterAge()
+        r = r & self.enterDate()
+        r = r & self.enterTime()
+        r = r & self.selectPeople()
+        r = r & self.checkAlergies()
         return r
 
     def checkLocalStorage(self):
