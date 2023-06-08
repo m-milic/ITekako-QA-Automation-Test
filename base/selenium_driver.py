@@ -335,3 +335,22 @@ class SeleniumDriver:
             r = False
             print_stack()
         return r
+
+    def hover(self, locator="", locatorType='xpath', element=None):
+        """
+        Hovers pointer to an element.
+        """
+        r = True
+        try:
+            if locator:
+                self.log.debug("In locator condition")
+                element = self.getElement(locator, locatorType)
+            actions = ActionChains(self.driver)
+            actions.move_to_element(element)
+            actions.perform()
+            self.log.info("Successfully hovered to the element")
+        except:
+            self.log.error("Failed to hover to the element")
+            print_stack()
+            r = False
+        return r
