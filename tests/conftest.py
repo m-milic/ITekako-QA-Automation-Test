@@ -20,6 +20,19 @@ def oneTimeSetUp(request, browser):
     driver.quit()
     print("One time tearDown of a test run")
 
+@pytest.fixture(scope = 'class')
+def oneTimeSetUpLaterTests(request, browser):
+    print("One time setUp of a test run")
+    wdf = WebDriverFactory(browser)
+    driver = wdf.getWebDriverInstance(baseURL="http://the-internet.herokuapp.com/hovers")
+
+    if request.cls is not None:
+        request.cls.driver = driver
+
+    yield driver
+    driver.quit()
+    print("One time tearDown of a test run")
+
 def pytest_addoption(parser):
     parser.addoption("--browser")
     parser.addoption("--osType", help="Type of operating system")
