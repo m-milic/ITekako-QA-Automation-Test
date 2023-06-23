@@ -19,6 +19,7 @@ class HoverTest(unittest.TestCase):
     def test_allButtons(self):
 
         time.sleep(1)
+        self.sp.driver.get(self.sp.driver.current_url + "/hovers")
 
         r = self.sp.hoverAndClickFirst()
         self.ts.mark(r, "Hover and click first user")

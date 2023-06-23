@@ -24,7 +24,7 @@ def oneTimeSetUp(request, browser):
 def oneTimeSetUpLaterTests(request, browser):
     print("One time setUp of a test run")
     wdf = WebDriverFactory(browser)
-    driver = wdf.getWebDriverInstance(baseURL="http://the-internet.herokuapp.com/hovers")
+    driver = wdf.getWebDriverInstance(baseURL="http://the-internet.herokuapp.com")
 
     if request.cls is not None:
         request.cls.driver = driver

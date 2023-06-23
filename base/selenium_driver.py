@@ -354,3 +354,18 @@ class SeleniumDriver:
             print_stack()
             r = False
         return r
+
+    def getAttribute(self, att="", locator="", locatorType='xpath', element = None):
+        value = None
+        try:
+            if locator:
+                element = self.getElement(locator, locatorType)
+            self.log.debug("Before getting attribute")
+            value = element.get_attribute(att)
+            self.log.info("Value of the attribute : " + att + " of the element with locator: " + locator +
+                          " locatorType: " + locatorType + " - is: " + value)
+        except:
+            self.log.info("Cannot find value of the attribute : " + att +
+                          " of the element with locator: " + locator + " locatorType: " + locatorType)
+            print_stack()
+        return value
